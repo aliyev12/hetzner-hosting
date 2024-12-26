@@ -19,3 +19,4 @@ networks:
 
 include:
   - ./projects/jobmosaic/docker-compose.yml
+  - ./projects/test/docker-compose.yml
