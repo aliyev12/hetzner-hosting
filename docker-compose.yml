@@ -10,3 +10,9 @@ services:
       - ./sites:/etc/nginx/sites-enabled
       - ./logs:/var/log/nginx
     restart: always
+    networks:
+      - aa_network
+
+networks:
+  aa_network:
+    driver: bridge
