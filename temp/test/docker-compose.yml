@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+  nginx:
+    image: nginx:latest
+    ports:
+      - "8081:80"
+    restart: always
+    networks:
+      - aa_network
+
+networks:
+  aa_network:
+    driver: bridge
