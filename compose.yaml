@@ -1,0 +1,66 @@
+version: "3"
+
+services:
+  projects.aaliyev.com:
+    image: nginx:latest
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./html:/usr/share/nginx/html
+    restart: always
+    networks:
+      - aa_network
+
+  jobmosaic_nginx:
+    image: nginx:alpine
+    container_name: jobmosaic_nginx
+    restart: unless-stopped
+    ports:
+      - "80"
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+      - ./projects/jobmosaic:/var/www
+      - ./projects/jobmosaic/docker/nginx/conf.d:/etc/nginx/conf.d/
+    networks:
+      - aa_network
+    depends_on:
+      - jobmosaic_app
+
+  jobmosaic_app:
+    build:
+      context: ./projects/jobmosaic
+      dockerfile: ./projects/jobmosaic/Dockerfile
+    container_name: jobmosaic_app
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - ./projects/jobmosaic:/var/www
+    networks:
+      - aa_network
+    depends_on:
+      - jobmosaic_db
+
+  jobmosaic_db:
+    image: postgres:15-alpine
+    container_name: jobmosaic_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: jobmosaic
+      POSTGRES_USER: jobmosaic_admin
+      POSTGRES_PASSWORD: qHbUo3Vt
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - aa_network
+
+networks:
+  aa_network:
+    driver: bridge
+
+volumes:
+  postgres_data:
