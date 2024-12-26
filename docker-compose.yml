@@ -6,5 +6,7 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./nginx/conf.d:/etc/nginx/conf.d
-    command: ["nginx", "-g", "daemon off;"]
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./sites:/etc/nginx/sites-enabled
+      - ./logs:/var/log/nginx
+    restart: always
