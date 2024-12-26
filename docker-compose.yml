@@ -16,3 +16,6 @@ services:
 networks:
   aa_network:
     driver: bridge
+
+include:
+  - ./projects/jobmosaic/docker-compose.yml
