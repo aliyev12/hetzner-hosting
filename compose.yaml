@@ -14,7 +14,7 @@ services:
     networks:
       - aa_network
 
-  jobmosaic_nginx:
+  nginx:
     image: nginx:alpine
     container_name: jobmosaic_nginx
     restart: unless-stopped
@@ -27,12 +27,12 @@ services:
     networks:
       - aa_network
     depends_on:
-      - jobmosaic_app
+      - app
 
-  jobmosaic_app:
+  app:
     build:
       context: ./projects/jobmosaic
-      dockerfile: ./projects/jobmosaic/Dockerfile
+      dockerfile: Dockerfile
     container_name: jobmosaic_app
     restart: unless-stopped
     working_dir: /var/www/
@@ -41,9 +41,9 @@ services:
     networks:
       - aa_network
     depends_on:
-      - jobmosaic_db
+      - db
 
-  jobmosaic_db:
+  db:
     image: postgres:15-alpine
     container_name: jobmosaic_db
     restart: unless-stopped
