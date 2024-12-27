@@ -42,6 +42,10 @@ services:
       - aa_network
     depends_on:
       - db
+    command: >
+      sh -c "php artisan migrate --force &&
+            php artisan db:seed --force &&
+            php-fpm"
 
   db:
     image: postgres:15-alpine
