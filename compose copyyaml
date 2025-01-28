@@ -40,12 +40,19 @@ services:
       - aa_network
     depends_on:
       - db
+    # command: >
+    #   sh -c "php artisan migrate --force &&
+    #         php artisan db:seed --force &&
+    #         php-fpm"
 
   db:
     image: postgres:15-alpine
     container_name: jobmosaic_db
     restart: unless-stopped
     environment:
+      # POSTGRES_DB: ${JOBMOSAIC_POSTGRES_DB}
+      # POSTGRES_USER: ${JOBMOSAIC_POSTGRES_USER}
+      # POSTGRES_PASSWORD: ${JOBMOSAIC_POSTGRES_PASSWORD}
       POSTGRES_DB: jobmosaic
       POSTGRES_USER: jobmosaic_admin
       POSTGRES_PASSWORD: qHbUo3Vt
@@ -56,9 +63,42 @@ services:
     networks:
       - aa_network
 
+  # vistashopverse_db:
+  #   image: postgres:15-alpine
+  #   container_name: vistashopverse_db
+  #   restart: always
+  #   environment:
+  #     POSTGRES_DB: ${VSV_POSTGRES_DB}
+  #     POSTGRES_USER: ${VSV_POSTGRES_USER}
+  #     POSTGRES_PASSWORD: ${VSV_POSTGRES_PASSWORD}
+  #   volumes:
+  #     - vsv_postgres_data:/var/lib/postgresql/data
+  #   ports:
+  #     - "3003:5432"
+  #   networks:
+  #     - vsv_network
+
+  # vistashopverse_app:
+  #   build:
+  #     context: ./projects/vistashopverse
+  #     dockerfile: Dockerfile
+  #   container_name: vistashopverse_app
+  #   ports:
+  #     - "3002:3000"
+  #   environment:
+  #     NODE_ENV: production
+  #     DATABASE_URL: ${VSV_DATABASE_URL}
+  #   depends_on:
+  #     - vistashopverse_db
+  #   networks:
+  #     - vsv_network
+
 networks:
   aa_network:
     driver: bridge
+  # vsv_network:
+  #   driver: bridge
 
 volumes:
   postgres_data:
+  # vsv_postgres_data:
