@@ -50,9 +50,12 @@ services:
     container_name: jobmosaic_db
     restart: unless-stopped
     environment:
-      POSTGRES_DB: ${JOBMOSAIC_POSTGRES_DB}
-      POSTGRES_USER: ${JOBMOSAIC_POSTGRES_USER}
-      POSTGRES_PASSWORD: ${JOBMOSAIC_POSTGRES_PASSWORD}
+      # POSTGRES_DB: ${JOBMOSAIC_POSTGRES_DB}
+      # POSTGRES_USER: ${JOBMOSAIC_POSTGRES_USER}
+      # POSTGRES_PASSWORD: ${JOBMOSAIC_POSTGRES_PASSWORD}
+      POSTGRES_DB: jobmosaic
+      POSTGRES_USER: jobmosaic_admin
+      POSTGRES_PASSWORD: qHbUo3Vt
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
