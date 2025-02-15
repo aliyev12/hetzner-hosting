@@ -17,7 +17,7 @@ services:
 
   app:
     healthcheck:
-      test: ["CMD", "curl", "-f", "https://jobmosaic.aaliyev.com/"] # Adjust the URL as needed
+      test: ["CMD", "curl", "-f", "http://localhost"]
       interval: 30s
       timeout: 10s
       retries: 5
