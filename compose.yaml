@@ -16,6 +16,11 @@ services:
       - app
 
   app:
+    healthcheck:
+      test: ["CMD", "curl", "-f", "https://jobmosaic.aaliyev.com/"] # Adjust the URL as needed
+      interval: 30s
+      timeout: 10s
+      retries: 5
     build:
       context: ./projects/jobmosaic
       dockerfile: Dockerfile
